@@ -1,0 +1,18 @@
+{
+  "name": "savis-collection-root",
+  "version": "1.0.0",
+  "description": "Root configuration for SAVI'S Collection streetwear store",
+  "main": "backend/index.js",
+  "type": "module",
+  "scripts": {
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "install-all": "npm run install:backend && npm run install:frontend",
+    "build:frontend": "cd frontend && npm run build",
+    "build": "npm run install-all && npm run build:frontend",
+    "start": "node backend/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

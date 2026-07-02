@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Luxury Matte Gold Choker Set",
+    "price": 1499,
+    "category": "Gold Ornaments",
+    "description": "Elegant antique matte gold choker necklace set with matching earrings, embellished with synthetic ruby and emerald beads. Traditional South Indian design.",
+    "imagePath": "./backend/public/uploads/gold_choker.png",
+    "sizes": ["Free Size"],
+    "colors": ["Gold"],
+    "featured": true
+  },
+  {
+    "name": "Premium Gold Plated Covering Bangle Set",
+    "price": 499,
+    "category": "Covering Ornaments",
+    "description": "Set of 4 daily wear gold-plated covering bangles with micro-gold plating for long-lasting luster. Classical gold design replicates real gold texture.",
+    "imagePath": "./backend/public/uploads/covering_bangles.png",
+    "sizes": ["2.4", "2.6", "2.8"],
+    "colors": ["Gold"],
+    "featured": true
+  }
+]

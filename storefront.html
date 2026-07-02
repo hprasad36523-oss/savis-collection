@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAVI'S collection — Premium Fabrics, Made in India</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --primary:#c8102e;
+  --primary-dark:#a00d24;
+  --black:#1a1a1a;
+  --gray:#666;
+  --light:#f5f5f5;
+  --border:#e8e8e8;
+  --white:#fff;
+  --green:#2d8c4e;
+  --badge-new:#1a6fbf;
+}
+body{font-family:'Poppins',sans-serif;color:var(--black);background:#fff;overflow-x:hidden;}
+
+/* ── TOP BAR ── */
+.top-bar{background:var(--primary);color:#fff;text-align:center;padding:8px 1rem;font-size:12px;letter-spacing:.5px;}
+.top-bar a{color:#fff;text-decoration:none;}
+
+/* ── HEADER ── */
+header{
+  position:sticky;top:0;z-index:200;background:#fff;
+  border-bottom:1px solid var(--border);
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+.header-inner{
+  max-width:1280px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 1.5rem;gap:1rem;
+}
+.logo{
+  font-family:'Playfair Display',serif;
+  font-size:26px;font-weight:600;color:var(--primary);
+  text-decoration:none;white-space:nowrap;
+  display:flex;align-items:center;gap:8px;
+  letter-spacing:0.3px;
+}
+.logo span{font-weight:400;color:var(--black);}
+.search-bar{
+  flex:1;max-width:500px;
+  display:flex;border:1.5px solid var(--border);border-radius:4px;overflow:hidden;
+  transition:border-color .2s;
+}
+.search-bar:focus-within{border-color:var(--primary);}
+.search-bar input{
+  flex:1;padding:10px 14px;border:none;outline:none;
+  font-family:'Poppins',sans-serif;font-size:14px;
+}
+.search-bar button{
+  background:var(--primary);border:none;padding:0 18px;
+  color:#fff;cursor:pointer;font-size:16px;transition:background .2s;
+}
+.search-bar button:hover{background:var(--primary-dark);}
+.header-actions{display:flex;gap:6px;align-items:center;}
+.hdr-btn{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  background:none;border:none;cursor:pointer;padding:6px 10px;
+  color:var(--black);font-family:'Poppins',sans-serif;
+  font-size:10px;font-weight:500;text-decoration:none;
+  border-radius:4px;transition:background .15s;position:relative;
+  white-space:nowrap;
+}
+.hdr-btn:hover{background:var(--light);}
+.hdr-btn .icon{font-size:20px;line-height:1;}
+.cart-badge{
+  position:absolute;top:4px;right:8px;
+  background:var(--primary);color:#fff;
+  font-size:9px;font-weight:700;
+  width:16px;height:16px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* ── NAV ── */
+nav{background:#fff;border-bottom:1px solid var(--border);}
+.nav-inner{
+  max-width:1280px;margin:0 auto;
+  display:flex;align-items:center;gap:0;
+  overflow-x:auto;scrollbar-width:none;
+}
+.nav-inner::-webkit-scrollbar{display:none;}
+.nav-link{
+  display:block;padding:12px 18px;
+  font-size:13px;font-weight:500;color:var(--black);
+  text-decoration:none;white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;
+}
+.nav-link:hover,.nav-link.active{color:var(--primary);border-bottom-color:var(--primary);}
+
+/* ── HERO SLIDER ── */
+.hero{position:relative;overflow:hidden;background:#f9f0f2;}
+.hero-slides{display:flex;transition:transform .5s ease;}
+.hero-slide{
+  min-width:100%;position:relative;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;min-height:420px;
+}
+.hero-slide.reverse{direction:rtl;}
+.hero-slide.reverse>*{direction:ltr;}
+.hero-img{width:100%;height:100%;min-height:420px;object-fit:cover;}
+.hero-content{
+  padding:3rem 4rem;
+}
+.hero-tag{
+  display:inline-block;
+  background:var(--primary);color:#fff;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  padding:5px 14px;margin-bottom:1rem;font-weight:600;
+}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,4vw,46px);font-weight:600;
+  line-height:1.15;margin-bottom:1rem;color:var(--black);
+}
+.hero-title em{color:var(--primary);font-style:normal;}
+.hero-sub{font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:1.75rem;max-width:380px;}
+.hero-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--primary);color:#fff;
+  padding:13px 28px;font-size:13px;font-weight:600;
+  text-decoration:none;letter-spacing:.5px;
+  border:2px solid var(--primary);transition:all .2s;
+}
+.hero-cta:hover{background:transparent;color:var(--primary);}
+.hero-dots{
+  position:absolute;bottom:1.25rem;left:50%;transform:translateX(-50%);
+  display:flex;gap:8px;
+}
+.hero-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(0,0,0,.2);border:none;cursor:pointer;transition:background .2s;
+}
+.hero-dot.active{background:var(--primary);}
+.hero-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(255,255,255,.9);border:1px solid var(--border);
+  width:40px;height:40px;border-radius:50%;
+  cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;z-index:5;
+}
+.hero-arrow:hover{background:#fff;}
+.hero-arrow.prev{left:1rem;}
+.hero-arrow.next{right:1rem;}
+
+/* ── TRUST STRIP ── */
+.trust-strip{
+  background:#fff;border-bottom:1px solid var(--border);
+  padding:1rem 1.5rem;
+}
+.trust-inner{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+}
+.trust-item{
+  display:flex;align-items:center;gap:10px;
+  justify-content:center;
+}
+.trust-icon{font-size:24px;}
+.trust-text strong{display:block;font-size:13px;font-weight:600;}
+.trust-text span{font-size:11px;color:var(--gray);}
+
+/* ── SECTION COMMON ── */
+.section{padding:2.5rem 0;}
+.section-inner{max-width:1280px;margin:0 auto;padding:0 1.5rem;}
+.section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.5rem;
+  border-left:4px solid var(--primary);
+  padding-left:12px;
+}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:22px;font-weight:600;color:var(--black);
+}
+.view-all{
+  font-size:12px;font-weight:600;color:var(--primary);
+  text-decoration:none;letter-spacing:.5px;text-transform:uppercase;
+  border:1.5px solid var(--primary);padding:7px 16px;
+  transition:all .2s;white-space:nowrap;
+}
+.view-all:hover{background:var(--primary);color:#fff;}
+
+/* ── COLLECTIONS GRID ── */
+.collections-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:1rem;
+}
+.col-card{
+  position:relative;overflow:hidden;cursor:pointer;
+  border-radius:6px;background:var(--light);
+  border:1px solid var(--border);
+  transition:transform .25s,box-shadow .25s;
+  text-decoration:none;display:block;
+}
+.col-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1);}
+.col-img-wrap{aspect-ratio:3/4;overflow:hidden;}
+.col-img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.col-card:hover .col-img{transform:scale(1.06);}
+.col-label{
+  padding:10px 10px;text-align:center;
+}
+.col-name{font-size:13px;font-weight:600;color:var(--black);margin-bottom:2px;}
+.col-cta{font-size:11px;color:var(--primary);font-weight:500;}
+
+/* ── PRODUCTS ROW (horizontal scroll) ── */
+.products-scroll{
+  display:flex;gap:1rem;
+  overflow-x:auto;padding-bottom:8px;
+  scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+}
+.products-scroll::-webkit-scrollbar{height:4px;}
+.products-scroll::-webkit-scrollbar-thumb{background:var(--border);}
+
+/* ── PRODUCT CARD ── */
+.product-card{
+  min-width:200px;max-width:200px;
+  cursor:pointer;flex-shrink:0;
+  transition:transform .25s;
+  text-decoration:none;color:inherit;
+  display:block;
+}
+.product-card:hover{transform:translateY(-3px);}
+.pc-img-wrap{
+  position:relative;overflow:hidden;
+  background:var(--light);aspect-ratio:2/3;border-radius:4px;
+  margin-bottom:10px;
+}
+.pc-img,.pc-img-hover{
+  width:100%;height:100%;object-fit:cover;
+  position:absolute;inset:0;transition:opacity .4s;
+}
+.pc-img-hover{opacity:0;}
+.product-card:hover .pc-img{opacity:0;}
+.product-card:hover .pc-img-hover{opacity:1;}
+.pc-badges{
+  position:absolute;top:8px;left:8px;
+  display:flex;flex-direction:column;gap:4px;z-index:1;
+}
+.badge{
+  font-size:10px;font-weight:700;padding:3px 8px;
+  letter-spacing:.5px;
+}
+.badge-off{background:var(--primary);color:#fff;}
+.badge-new{background:var(--badge-new);color:#fff;}
+.pc-actions{
+  position:absolute;bottom:-48px;left:0;right:0;
+  display:flex;gap:0;transition:bottom .25s ease;
+  z-index:2;
+}
+.product-card:hover .pc-actions{bottom:0;}
+.pc-cart-btn{
+  flex:1;background:rgba(26,26,26,.9);color:#fff;
+  border:none;padding:12px 8px;font-size:11px;font-weight:600;
+  letter-spacing:.5px;cursor:pointer;font-family:'Poppins',sans-serif;
+  transition:background .2s;
+}
+.pc-cart-btn:hover{background:var(--primary);}
+.pc-wish-btn{
+  background:rgba(255,255,255,.9);border:none;
+  padding:12px 14px;font-size:16px;cursor:pointer;
+  transition:background .2s;
+}
+.pc-wish-btn:hover{background:#fff;}
+.pc-name{font-size:13px;font-weight:500;color:var(--black);margin-bottom:4px;line-height:1.3;}
+.pc-category{font-size:11px;color:var(--gray);margin-bottom:6px;}
+.pc-price-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.pc-price{font-size:14px;font-weight:700;color:var(--black);}
+.pc-old{font-size:12px;color:var(--gray);text-decoration:line-through;}
+.pc-discount{font-size:11px;font-weight:600;color:var(--green);}
+
+/* ── PROMO BANNER ── */
+.promo-banner{
+  background:linear-gradient(135deg,#1a1a1a 0%,#3d0010 100%);
+  padding:3rem 1.5rem;text-align:center;
+}
+.promo-banner h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(24px,3.5vw,40px);font-weight:600;color:#fff;
+  margin-bottom:.75rem;
+}
+.promo-banner p{font-size:15px;color:rgba(255,255,255,.7);margin-bottom:1.75rem;}
+.promo-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--primary);color:#fff;
+  padding:14px 36px;font-size:14px;font-weight:600;
+  text-decoration:none;border:2px solid var(--primary);
+  transition:all .2s;
+}
+.promo-cta:hover{background:transparent;border-color:#fff;color:#fff;}
+
+/* ── CART DRAWER ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:400;opacity:0;pointer-events:none;transition:opacity .3s;}
+.overlay.open{opacity:1;pointer-events:all;}
+.cart-drawer{
+  position:fixed;top:0;right:0;bottom:0;width:380px;
+  background:#fff;z-index:401;
+  transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+}
+.cart-drawer.open{transform:none;}
+.cart-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);
+}
+.cart-head h3{font-size:18px;font-weight:600;}
+.close-btn{background:none;border:none;font-size:22px;cursor:pointer;color:var(--gray);transition:color .2s;}
+.close-btn:hover{color:var(--black);}
+.cart-body{flex:1;overflow-y:auto;padding:1.25rem 1.5rem;}
+.cart-empty-msg{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:100%;gap:1rem;color:var(--gray);text-align:center;
+}
+.cart-empty-msg .empty-icon{font-size:52px;opacity:.3;}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.ci-img{width:64px;height:80px;object-fit:cover;background:var(--light);flex-shrink:0;border-radius:3px;}
+.ci-info{flex:1;}
+.ci-name{font-size:13px;font-weight:500;margin-bottom:3px;line-height:1.3;}
+.ci-meta{font-size:11px;color:var(--gray);margin-bottom:8px;}
+.ci-qty{display:flex;align-items:center;gap:8px;}
+.qty-btn{width:24px;height:24px;border:1px solid var(--border);background:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+.qty-btn:hover{background:var(--light);}
+.ci-price{font-size:13px;font-weight:600;white-space:nowrap;}
+.ci-remove{background:none;border:none;cursor:pointer;color:var(--gray);font-size:16px;align-self:flex-start;transition:color .2s;}
+.ci-remove:hover{color:var(--primary);}
+.cart-foot{padding:1.25rem 1.5rem;border-top:1px solid var(--border);}
+.cart-subtotal{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;}
+.cart-subtotal span:first-child{font-size:14px;color:var(--gray);}
+.cart-subtotal strong{font-size:18px;font-weight:700;}
+.checkout-btn{
+  width:100%;background:var(--primary);color:#fff;border:none;
+  padding:15px;font-size:14px;font-weight:600;font-family:'Poppins',sans-serif;
+  cursor:pointer;letter-spacing:.5px;transition:background .2s;margin-bottom:10px;
+}
+.checkout-btn:hover{background:var(--primary-dark);}
+.continue-btn{
+  width:100%;background:none;border:1.5px solid var(--border);
+  padding:13px;font-size:13px;font-weight:500;font-family:'Poppins',sans-serif;
+  cursor:pointer;color:var(--black);transition:border-color .2s;
+}
+.continue-btn:hover{border-color:var(--black);}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(10px);
+  background:var(--black);color:#fff;padding:12px 24px;font-size:13px;font-weight:500;
+  border-radius:4px;z-index:500;opacity:0;transition:all .3s;pointer-events:none;
+  white-space:nowrap;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── FOOTER ── */
+footer{background:#1a1a1a;color:rgba(255,255,255,.7);padding:3rem 1.5rem 1.5rem;}
+.footer-grid{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem;}
+.footer-brand .logo{color:#fff;font-size:22px;}
+.footer-about{font-size:13px;line-height:1.7;margin-top:1rem;max-width:260px;}
+.footer-socials{display:flex;gap:10px;margin-top:1.25rem;}
+.social{width:34px;height:34px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6);text-decoration:none;font-size:14px;border-radius:3px;transition:all .2s;}
+.social:hover{border-color:var(--primary);color:var(--primary);}
+.footer-col h4{font-size:13px;font-weight:600;color:#fff;margin-bottom:1rem;text-transform:uppercase;letter-spacing:1px;}
+.footer-col ul{list-style:none;}
+.footer-col li{margin-bottom:.6rem;}
+.footer-col a{font-size:13px;color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s;}
+.footer-col a:hover{color:var(--primary);}
+.footer-bottom{max-width:1280px;margin:0 auto;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center;font-size:12px;}
+
+/* ── MARQUEE ── */
+.marquee-wrap{background:var(--black);overflow:hidden;padding:10px 0;}
+.marquee{display:flex;gap:0;white-space:nowrap;animation:marquee 30s linear infinite;}
+.marquee span{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.7);padding:0 2rem;}
+.marquee span.dot{color:var(--primary);padding:0;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ── WHATSAPP ── */
+.wa-btn{
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:150;
+  background:#25D366;color:#fff;width:52px;height:52px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:26px;text-decoration:none;
+  box-shadow:0 4px 16px rgba(37,211,102,.4);
+  transition:transform .2s,box-shadow .2s;
+}
+.wa-btn:hover{transform:scale(1.1);box-shadow:0 6px 24px rgba(37,211,102,.5);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-slide{grid-template-columns:1fr;min-height:auto;}
+  .hero-img{display:none;}
+  .hero-content{padding:2rem 1.5rem;}
+  .trust-inner{grid-template-columns:repeat(2,1fr);}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .collections-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));}
+}
+@media(max-width:600px){
+  .header-inner{flex-wrap:wrap;}
+  .search-bar{order:3;flex:0 0 100%;}
+  .trust-inner{grid-template-columns:1fr 1fr;}
+  .footer-grid{grid-template-columns:1fr;}
+  .product-card{min-width:160px;max-width:160px;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  🚚 Free Shipping on orders above ₹599 &nbsp;|&nbsp; ✨ New arrivals every week &nbsp;|&nbsp; 📞 <a href="tel:+919876543210">+91 98765 43210</a>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">SAVI'S <span>collection</span></a>
+    <div class="search-bar">
+      <input type="text" placeholder="Search for products, categories..." id="searchInput" oninput="handleSearch(this.value)">
+      <button>🔍</button>
+    </div>
+    <div class="header-actions">
+      <a href="#" class="hdr-btn">
+        <span class="icon">👤</span>
+        <span>Account</span>
+      </a>
+      <a href="#" class="hdr-btn">
+        <span class="icon">❤️</span>
+        <span>Wishlist</span>
+      </a>
+      <button class="hdr-btn" onclick="toggleCart()">
+        <span class="icon">🛒</span>
+        <span>Cart</span>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-link active" onclick="scrollTo('#collections')">Kids Collections</a>
+    <a href="#" class="nav-link" onclick="scrollTo('#collections')">Home Essentials</a>
+    <a href="#" class="nav-link" onclick="scrollTo('#coords')">Co Ords</a>
+    <a href="#" class="nav-link" onclick="scrollTo('#cotton')">Cotton Collection</a>
+    <a href="#" class="nav-link" onclick="scrollTo('#feeding')">Feeding Dress</a>
+    <a href="#" class="nav-link" onclick="scrollTo('#kurtis')">Kurtis</a>
+    <a href="#" class="nav-link" onclick="scrollTo('#nightgown')">Night Gown</a>
+    <a href="#" class="nav-link" onclick="scrollTo('#sarees')">Sarees</a>
+    <a href="#" class="nav-link">Contact Us</a>
+  </div>
+</nav>
+
+<!-- HERO SLIDER -->
+<div class="hero">
+  <button class="hero-arrow prev" onclick="heroSlide(-1)">‹</button>
+  <button class="hero-arrow next" onclick="heroSlide(1)">›</button>
+  <div class="hero-slides" id="heroSlides">
+    <!-- Slide 1 -->
+    <div class="hero-slide">
+      <div class="hero-content">
+        <div class="hero-tag">🔥 Big Combo Sale is Live</div>
+        <h1 class="hero-title">Premium Fabrics<br><em>Made in India,</em><br>Made for You</h1>
+        <p class="hero-sub">Your favourite styles are now in combo offers at unbelievable prices. More styles · More savings · More reasons to shop.</p>
+        <a href="#new-arrivals" class="hero-cta">View All Collections →</a>
+      </div>
+      <img src="/hero_slide1.jpg" alt="Sale" class="hero-img">
+    </div>
+    <!-- Slide 2 -->
+    <div class="hero-slide">
+      <div class="hero-content">
+        <div class="hero-tag">New Arrival</div>
+        <h1 class="hero-title">Elegant Cotton<br><em>Co-ords</em><br>You'll Love</h1>
+        <p class="hero-sub">Effortlessly chic cotton co-ord sets in fresh shades. Comfort meets style for every occasion.</p>
+        <a href="#coords" class="hero-cta">Shop Co-ords →</a>
+      </div>
+      <img src="/hero_slide2.jpg" alt="Co-ords" class="hero-img">
+    </div>
+    <!-- Slide 3 -->
+    <div class="hero-slide">
+      <div class="hero-content">
+        <div class="hero-tag">Trending</div>
+        <h1 class="hero-title">Breathable<br><em>Night Gowns</em><br>for Restful Nights</h1>
+        <p class="hero-sub">Soft fabrics, easy fits, and soothing styles designed for total comfort and relaxed evenings.</p>
+        <a href="#nightgown" class="hero-cta">Shop Night Gowns →</a>
+      </div>
+      <img src="/hero_slide3.jpg" alt="Night Gown" class="hero-img">
+    </div>
+  </div>
+  <div class="hero-dots" id="heroDots">
+    <button class="hero-dot active" onclick="goToSlide(0)"></button>
+    <button class="hero-dot" onclick="goToSlide(1)"></button>
+    <button class="hero-dot" onclick="goToSlide(2)"></button>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>Free Shipping Above ₹599</span><span class="dot">★</span>
+    <span>Premium Quality Fabrics</span><span class="dot">★</span>
+    <span>100% Made in India</span><span class="dot">★</span>
+    <span>Easy Returns</span><span class="dot">★</span>
+    <span>New Arrivals Every Week</span><span class="dot">★</span>
+    <span>COD Available</span><span class="dot">★</span>
+    <span>Free Shipping Above ₹599</span><span class="dot">★</span>
+    <span>Premium Quality Fabrics</span><span class="dot">★</span>
+    <span>100% Made in India</span><span class="dot">★</span>
+    <span>Easy Returns</span><span class="dot">★</span>
+    <span>New Arrivals Every Week</span><span class="dot">★</span>
+    <span>COD Available</span><span class="dot">★</span>
+  </div>
+</div>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-inner">
+    <div class="trust-item"><span class="trust-icon">🚚</span><div class="trust-text"><strong>Free Delivery</strong><span>Orders above ₹599</span></div></div>
+    <div class="trust-item"><span class="trust-icon">🔄</span><div class="trust-text"><strong>Easy Returns</strong><span>7-day return policy</span></div></div>
+    <div class="trust-item"><span class="trust-icon">🔒</span><div class="trust-text"><strong>Secure Payment</strong><span>100% safe checkout</span></div></div>
+    <div class="trust-item"><span class="trust-icon">🇮🇳</span><div class="trust-text"><strong>Made in India</strong><span>Ethically sourced</span></div></div>
+  </div>
+</div>
+
+<!-- SHOP BY COLLECTIONS -->
+<section class="section" id="collections">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 class="section-title">Shop By Collections</h2>
+    </div>
+    <div class="collections-grid" id="collectionsGrid">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- NEW ARRIVALS -->
+<section class="section" id="new-arrivals" style="background:var(--light);">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 class="section-title">New Arrivals</h2>
+      <a href="#" class="view-all">View all products</a>
+    </div>
+    <div class="products-scroll" id="newArrivalsRow"></div>
+  </div>
+</section>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <h2>🔥 Big Combo Sale is Live 🔥</h2>
+  <p>Your favourite styles now in combo offers at unbelievable prices. Limited stock — First come, first served!</p>
+  <a href="#" class="promo-cta">Shop the Sale →</a>
+</div>
+
+<!-- COTTON COLLECTIONS -->
+<section class="section" id="cotton">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 class="section-title">Cotton Collections</h2>
+      <a href="#" class="view-all">View all products</a>
+    </div>
+    <div class="products-scroll" id="cottonRow"></div>
+  </div>
+</section>
+
+<!-- CO-ORDS -->
+<section class="section" id="coords" style="background:var(--light);">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 class="section-title">Co-ords</h2>
+      <a href="#" class="view-all">View all products</a>
+    </div>
+    <div class="products-scroll" id="coordsRow"></div>
+  </div>
+</section>
+
+<!-- KURTIS -->
+<section class="section" id="kurtis">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 class="section-title">Kurtis</h2>
+      <a href="#" class="view-all">View all products</a>
+    </div>
+    <div class="products-scroll" id="kurtisRow"></div>
+  </div>
+</section>
+
+<!-- NIGHT GOWN -->
+<section class="section" id="nightgown" style="background:var(--light);">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 class="section-title">Night Gown</h2>
+      <a href="#" class="view-all">View all products</a>
+    </div>
+    <div class="products-scroll" id="nightgownRow"></div>
+  </div>
+</section>
+
+<!-- KIDS COLLECTIONS -->
+<section class="section" id="kids">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 class="section-title">Kids Collections</h2>
+      <a href="#" class="view-all">View all products</a>
+    </div>
+    <div class="products-scroll" id="kidsRow"></div>
+  </div>
+</section>
+
+<!-- FEEDING DRESS -->
+<section class="section" id="feeding" style="background:var(--light);">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 class="section-title">Feeding Dress</h2>
+      <a href="#" class="view-all">View all products</a>
+    </div>
+    <div class="products-scroll" id="feedingRow"></div>
+  </div>
+</section>
+
+<!-- SHORT TOPS -->
+<section class="section" id="shorttops">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 class="section-title">Short Tops</h2>
+      <a href="#" class="view-all">View all products</a>
+    </div>
+    <div class="products-scroll" id="shorttopsRow"></div>
+  </div>
+</section>
+
+<!-- SAREES -->
+<section class="section" id="sarees" style="background:var(--light);">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2 class="section-title">Sarees</h2>
+      <a href="#" class="view-all">View all products</a>
+    </div>
+    <div class="products-scroll" id="sareesRow"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="logo" style="color:#fff">SAVI'S <span style="color:rgba(255,255,255,.5)">collection</span></a>
+      <p class="footer-about">Premium fabrics, Made in India, Made for you. Quality materials ethically sourced and crafted with love.</p>
+      <div class="footer-socials">
+        <a href="#" class="social">f</a>
+        <a href="#" class="social">in</a>
+        <a href="#" class="social">📸</a>
+        <a href="#" class="social">▶</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Collections</h4>
+      <ul>
+        <li><a href="#">Kids Collections</a></li>
+        <li><a href="#">Home Essentials</a></li>
+        <li><a href="#">Co Ords</a></li>
+        <li><a href="#">Cotton Collection</a></li>
+        <li><a href="#">Feeding Dress</a></li>
+        <li><a href="#">Kurtis</a></li>
+        <li><a href="#">Night Gown</a></li>
+        <li><a href="#">Sarees</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Customer Help</h4>
+      <ul>
+        <li><a href="#">Track Your Order</a></li>
+        <li><a href="#">Return & Exchange</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Refund Policy</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SAVI'S collection — All rights reserved.</span>
+    <span>Made with ❤️ in India</span>
+  </div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-head">
+    <h3>Your Cart (<span id="cartCountHead">0</span>)</h3>
+    <button class="close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-foot" id="cartFoot" style="display:none;">
+    <div class="cart-subtotal">
+      <span>Subtotal</span>
+      <strong id="cartTotal">₹0</strong>
+    </div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+    <button class="continue-btn" onclick="toggleCart()">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/919876543210" target="_blank" class="wa-btn" title="Chat on WhatsApp">💬</a>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+// In production, this is fetched from your backend API (managed via Telegram bot)
+const COLLECTIONS = [
+  {name:'🔥 BIG COMBO SALE',cta:'View All',img:'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=300&q=80',href:'#'},
+  {name:'Palazzo Set',cta:'View All',img:'https://images.unsplash.com/photo-1594938298603-c8148c4b4d73?w=300&q=80',href:'#'},
+  {name:'Georgette Frock',cta:'View All',img:'https://images.unsplash.com/photo-1566479179817-51cf0e98c0b7?w=300&q=80',href:'#'},
+  {name:'Stylish Co-Ords',cta:'View All',img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&q=80',href:'#coords'},
+  {name:'Elegant Sarees',cta:'View All',img:'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300&q=80',href:'#sarees'},
+  {name:'Night Gowns',cta:'View All',img:'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=300&q=80',href:'#nightgown'},
+  {name:'Trendy Kurtis',cta:'View All',img:'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&q=80',href:'#kurtis'},
+  {name:'Feeding Dresses',cta:'View All',img:'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=300&q=80',href:'#feeding'},
+  {name:'Cotton Collection',cta:'View All',img:'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=300&q=80',href:'#cotton'},
+  {name:'Short Tops',cta:'View All',img:'https://images.unsplash.com/photo-1588359348347-9bc6cbbb689e?w=300&q=80',href:'#shorttops'},
+  {name:'Salwars',cta:'View All',img:'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=300&q=80',href:'#'},
+  {name:'Kids Collections',cta:'View All',img:'https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=300&q=80',href:'#kids'},
+  {name:'Home Essentials',cta:'View All',img:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&q=80',href:'#'},
+  {name:'Readymade Blouse',cta:'View All',img:'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=300&q=80',href:'#'},
+];
+
+// Product factory — generates realistic demo product entries
+function makeProducts(category, names, prices, imgs, oldPrices=[], isNew=false) {
+  return names.map((name,i) => ({
+    id: `${category}-${i}`,
+    name, category,
+    price: prices[i % prices.length],
+    oldPrice: oldPrices[i % oldPrices.length] || null,
+    img: imgs[i % imgs.length],
+    imgHover: imgs[(i+1) % imgs.length],
+    badge: isNew ? 'new' : '',
+    inStock: true,
+  }));
+}
+
+const IMG = {
+  coord: [
+    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&q=80',
+    'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=300&q=80',
+    'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&q=80',
+    'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=300&q=80',
+  ],
+  kurti: [
+    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300&q=80',
+    'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=300&q=80',
+    'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&q=80',
+    'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=300&q=80',
+  ],
+  night: [
+    'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=300&q=80',
+    'https://images.unsplash.com/photo-1566479179817-51cf0e98c0b7?w=300&q=80',
+    'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=300&q=80',
+  ],
+  kids: [
+    'https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=300&q=80',
+    'https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=300&q=80',
+    'https://images.unsplash.com/photo-1561731216-c3a4d99437d5?w=300&q=80',
+  ],
+  cotton: [
+    'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&q=80',
+    'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=300&q=80',
+    'https://images.unsplash.com/photo-1588359348347-9bc6cbbb689e?w=300&q=80',
+  ],
+  saree: [
+    'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300&q=80',
+    'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&q=80',
+    'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&q=80',
+  ],
+};
+
+const PRODUCTS = {
+  newArrivals: [
+    ...makeProducts('Co-ords',['Cotton Co-ord Set Yellow','Cotton Co-ord Set Red','Cotton Co-ord Set Brown','Cotton Co-ord Set Green','Cotton Co-ord Set Navy Blue','Cotton Co-ord Set Black'],[999,999,999,999,999,999],IMG.coord,[1299],true),
+    ...makeProducts('Cotton',['Cambric Cotton Frock Forest Green','Cambric Cotton Frock Lime Green','Cambric Cotton Frock Black','Cotton Notched Collar Dress Red','Cotton Notched Collar Dress Green'],[999,999,999,999,999],IMG.cotton,[1199],true),
+    ...makeProducts('Night Gown',['Pure Cotton Night Dress Brown','Pure Cotton Night Dress Green','Pure Cotton Night Dress Grey','Pure Cotton Night Dress Peach'],[750,750,750,750],IMG.night,[950],true),
+  ],
+  cotton: makeProducts('Cotton',['Cambric Cotton Frock Forest Green','Cambric Cotton Frock Lime Green','Cambric Cotton Frock Black','Cotton Notched Collar Red','Cotton Notched Collar Green','Cambric Frocks Peacock Blue','Cambric Frocks Steel Blue','Cotton Straight Collar Pink'],[999,999,999,999,999,999,999,999],IMG.cotton,[1199,1299],true),
+  coords: makeProducts('Co-ords',['Cotton Co-ord Set Yellow','Cotton Co-ord Set Red','Cotton Co-ord Set Brown','Cotton Co-ord Set Green','Cotton Co-ord Set Navy Blue','Cotton Co-ord Set Black','Perfect Co-ord Set Green','Perfect Co-ord Set Yellow','Stylish Co-ords Purple','Stylish Co-ords Green','Stylish Co-ords Black'],[999,999,999,999,999,999,999,999,899,899,1199],IMG.coord,[1299,1199,1399],true),
+  kurtis: makeProducts('Kurtis',['A Line Summer Kurti Pink','A Line Summer Kurti Black','A Line Summer Kurti Green','A Line Summer Kurti Yellow','Kalyani Cotton Anarkali Parrot Green','Kalyani Cotton Anarkali Green Blue','A Line Cotton Kurti Yellow','A Line Cotton Kurti Purple','A Line Cotton Kurti Red'],[799,799,799,799,1499,1499,799,799,799],IMG.kurti,[1099,2099],false),
+  nightgown: makeProducts('Night Gown',['Pure Cotton Night Dress Brown','Pure Cotton Night Dress Green','Pure Cotton Night Dress Grey','Pure Cotton Night Dress Teal','Pure Cotton Night Dress Blush Pink','Pure Cotton Night Dress Deep Navy','Pure Cotton Night Dress Peach','Pure Cotton Night Dress Lavender','A-Line Night Gown Olive Green','A-Line Night Gown Pink','Cotton Stylish Nighty Grey'],[750,750,750,750,750,750,750,750,750,750,750],IMG.night,[950,1150],true),
+  kids: makeProducts('Kids',['Cotton Embroidery Co-ord Set Green','Cotton Embroidery Co-ord Set Blue','Cotton Embroidery Co-ord Set Black','Peplum Coord Set Navy Blue','Peplum Coord Set Orange','Peplum Coord Set Pink Floral','Spun Fabric Kids Frock Black','Spun Fabric Kids Frock Floral','Boys Shirt Shorts Mauve Car','Boys Shirt Shorts Blue Stripes'],[650,650,650,650,650,650,399,399,650,650],IMG.kids,[1199,699,1025],false),
+  feeding: makeProducts('Feeding',['Feeding Lounge Wear Green','Feeding Lounge Wear Black Dots','Feeding Lounge Wear Dark Navy','Feeding Lounge Wear Sea Green','Feeding Lounge Wear Royal Blue','Feeding Lounge Wear Purple','Feeding Loungewear Blood Red'],[650,650,650,650,650,650,650],IMG.coord,[850],false),
+  shorttops: makeProducts('Short Tops',['V Neck Sequence Border Top Reddish Purple','V Neck Border Short Top Pink','V Neck Border Short Top Peacock Blue','Straight Decollete Top Grey','V Neck Sequence Top Black','Border Short Top Yellow'],[499,499,499,499,499,499],IMG.cotton,[800,699],false),
+  sarees: makeProducts('Sarees',['Elegant Silk Saree Red','Printed Cotton Saree Blue','Designer Georgette Saree Green','Traditional Kanjeevaram Gold','Party Wear Saree Purple','Casual Cotton Saree Teal'],[1499,999,1299,2499,1799,899],IMG.saree,[2099,1499,1799,3299,2499,1299],false),
+};
+
+// ── RENDER COLLECTIONS GRID ────────────────────────────────────────────────
+function renderCollections() {
+  document.getElementById('collectionsGrid').innerHTML = COLLECTIONS.map(c => `
+    <a href="${c.href}" class="col-card">
+      <div class="col-img-wrap">
+        <img src="${c.img}" alt="${c.name}" class="col-img" loading="lazy">
+      </div>
+      <div class="col-label">
+        <div class="col-name">${c.name}</div>
+        <div class="col-cta">${c.cta} →</div>
+      </div>
+    </a>
+  `).join('');
+}
+
+// ── RENDER PRODUCT ROW ─────────────────────────────────────────────────────
+function renderRow(rowId, products) {
+  const el = document.getElementById(rowId);
+  if (!el) return;
+  el.innerHTML = products.map(p => {
+    const disc = p.oldPrice ? Math.round((1 - p.price/p.oldPrice)*100) : 0;
+    return `
+    <div class="product-card" onclick="openProduct('${p.id}')">
+      <div class="pc-img-wrap">
+        <img src="${p.img}" alt="${p.name}" class="pc-img" loading="lazy">
+        <img src="${p.imgHover}" alt="${p.name}" class="pc-img-hover" loading="lazy">
+        <div class="pc-badges">
+          ${disc ? `<span class="badge badge-off">-${disc}% OFF</span>` : ''}
+          ${p.badge==='new' ? `<span class="badge badge-new">NEW</span>` : ''}
+        </div>
+        <div class="pc-actions">
+          <button class="pc-cart-btn" onclick="event.stopPropagation();addToCart('${p.id}')">Add to Cart</button>
+          <button class="pc-wish-btn" onclick="event.stopPropagation();showToast('Added to Wishlist ♡')">♡</button>
+        </div>
+      </div>
+      <div class="pc-name">${p.name}</div>
+      <div class="pc-category">${p.category}</div>
+      <div class="pc-price-row">
+        <span class="pc-price">₹${p.price.toLocaleString('en-IN')}</span>
+        ${p.oldPrice ? `<span class="pc-old">₹${p.oldPrice.toLocaleString('en-IN')}</span>` : ''}
+        ${disc ? `<span class="pc-discount">${disc}% off</span>` : ''}
+      </div>
+    </div>
+  `}).join('');
+}
+
+function renderAll() {
+  renderCollections();
+  renderRow('newArrivalsRow', PRODUCTS.newArrivals);
+  renderRow('cottonRow', PRODUCTS.cotton);
+  renderRow('coordsRow', PRODUCTS.coords);
+  renderRow('kurtisRow', PRODUCTS.kurtis);
+  renderRow('nightgownRow', PRODUCTS.nightgown);
+  renderRow('kidsRow', PRODUCTS.kids);
+  renderRow('feedingRow', PRODUCTS.feeding);
+  renderRow('shorttopsRow', PRODUCTS.shorttops);
+  renderRow('sareesRow', PRODUCTS.sarees);
+}
+
+// ── HERO SLIDER ────────────────────────────────────────────────────────────
+let heroIdx = 0;
+const totalSlides = 3;
+function heroSlide(dir) { goToSlide((heroIdx + dir + totalSlides) % totalSlides); }
+function goToSlide(i) {
+  heroIdx = i;
+  document.getElementById('heroSlides').style.transform = `translateX(-${i * 100}%)`;
+  document.querySelectorAll('.hero-dot').forEach((d,j) => d.classList.toggle('active', j===i));
+}
+setInterval(() => heroSlide(1), 5000);
+
+// ── CART ──────────────────────────────────────────────────────────────────
+let cart = [];
+const allProducts = Object.values(PRODUCTS).flat();
+
+function getProduct(id) { return allProducts.find(p => p.id === id); }
+
+function addToCart(id) {
+  const p = getProduct(id);
+  if (!p) return;
+  const ex = cart.find(c => c.id === id);
+  if (ex) ex.qty++;
+  else cart.push({...p, qty:1});
+  updateCartUI();
+  showToast(`${p.name} added to cart`);
+}
+
+function updateCartUI() {
+  const count = cart.reduce((s,c) => s+c.qty, 0);
+  const total = cart.reduce((s,c) => s+c.price*c.qty, 0);
+  document.getElementById('cartBadge').textContent = count;
+  document.getElementById('cartCountHead').textContent = count;
+  const body = document.getElementById('cartBody');
+  const foot = document.getElementById('cartFoot');
+  if (cart.length === 0) {
+    body.innerHTML = `<div class="cart-empty-msg"><div class="empty-icon">🛒</div><h4>Your cart is empty</h4><p>Add some products to get started!</p></div>`;
+    foot.style.display = 'none';
+  } else {
+    body.innerHTML = cart.map((c,i) => `
+      <div class="cart-item">
+        <img src="${c.img}" alt="${c.name}" class="ci-img">
+        <div class="ci-info">
+          <div class="ci-name">${c.name}</div>
+          <div class="ci-meta">${c.category} · ₹${c.price.toLocaleString('en-IN')}</div>
+          <div class="ci-qty">
+            <button class="qty-btn" onclick="changeQty(${i},-1)">−</button>
+            <span>${c.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${i},1)">+</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+          <span class="ci-price">₹${(c.price*c.qty).toLocaleString('en-IN')}</span>
+          <button class="ci-remove" onclick="removeFromCart(${i})">✕</button>
+        </div>
+      </div>`).join('');
+    document.getElementById('cartTotal').textContent = '₹' + total.toLocaleString('en-IN');
+    foot.style.display = 'block';
+  }
+}
+
+function changeQty(i, d) {
+  cart[i].qty += d;
+  if (cart[i].qty <= 0) cart.splice(i, 1);
+  updateCartUI();
+}
+function removeFromCart(i) { cart.splice(i,1); updateCartUI(); }
+function toggleCart() {
+  const open = document.getElementById('cartDrawer').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+  document.body.style.overflow = open ? 'hidden' : '';
+  if (open) updateCartUI();
+}
+function checkout() {
+  showToast('Redirecting to checkout...');
+  setTimeout(() => alert('Checkout integration coming soon!\nTotal: ₹' + cart.reduce((s,c)=>s+c.price*c.qty,0).toLocaleString('en-IN')), 600);
+}
+
+// ── PRODUCT CLICK ─────────────────────────────────────────────────────────
+function openProduct(id) {
+  const p = getProduct(id);
+  if (!p) return;
+  // In production, navigate to /product/[id] page
+  showToast(`Viewing: ${p.name}`);
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────────
+function handleSearch(val) {
+  if (!val.trim()) return;
+  const matches = allProducts.filter(p => p.name.toLowerCase().includes(val.toLowerCase()) || p.category.toLowerCase().includes(val.toLowerCase()));
+  // In production: show dropdown results
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+renderAll();
+updateCartUI();
+
+// In production, sync products from backend:
+// async function sync() {
+//   const res = await fetch('http://localhost:3001/api/products');
+//   const data = await res.json();
+//   // map to PRODUCTS and re-render
+// }
+// sync();
+</script>
+</body>
+</html>

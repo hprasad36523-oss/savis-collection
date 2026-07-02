@@ -1,0 +1,308 @@
+Created At: 2026-06-08T17:02:07Z
+Completed At: 2026-06-08T17:02:08Z
+File Path: `file:///C:/Users/mukil/clothing-store/frontend/src/App.jsx`
+Total Lines: 2013
+Total Bytes: 98151
+Showing lines 1 to 300
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: import React, { useState, useEffect, useRef } from 'react';
+2: import './App.css';
+3: 
+4: // Fallback products data matching the SAVI'S collection storefront HTML structure
+5: const fallbackProducts = [
+6:   // Co-ords
+7:   {
+8:     id: "Co-ords-0",
+9:     name: "Cotton Co-ord Set Yellow",
+10:     price: 999,
+11:     oldPrice: 1299,
+12:     image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80",
+13:     category: "Co-ords",
+14:     description: "Effortlessly chic yellow cotton co-ord set. Breathable fabric, relaxed fit, perfect for summer outings.",
+15:     sizes: ["S", "M", "L", "XL"],
+16:     colors: ["Yellow", "Red", "Brown"],
+17:     badge: "new",
+18:     featured: true
+19:   },
+20:   {
+21:     id: "Co-ords-1",
+22:     name: "Cotton Co-ord Set Red",
+23:     price: 999,
+24:     oldPrice: 1299,
+25:     image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&q=80",
+26:     category: "Co-ords",
+27:     description: "Vibrant red cotton co-ord set. Made from high-quality organic cotton for all-day comfort.",
+28:     sizes: ["S", "M", "L", "XL"],
+29:     colors: ["Red", "Yellow", "Brown"],
+30:     badge: "new",
+31:     featured: true
+32:   },
+33:   {
+34:     id: "Co-ords-2",
+35:     name: "Cotton Co-ord Set Brown",
+36:     price: 999,
+37:     oldPrice: 1299,
+38:     image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&q=80",
+39:     category: "Co-ords",
+40:     description: "Classic earthy brown cotton co-ord set. Ideal blend of contemporary style and comfort.",
+41:     sizes: ["S", "M", "L", "XL"],
+42:     colors: ["Brown", "Yellow", "Red"],
+43:     badge: "new",
+44:     featured: false
+45:   },
+46:   {
+47:     id: "Co-ords-3",
+48:     name: "Cotton Co-ord Set Green",
+49:     price: 999,
+50:     oldPrice: 1299,
+51:     image: "https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&q=80",
+52:     category: "Co-ords",
+53:     description: "Fresh green cotton co-ord set. Handcrafted detailing on collar and sleeves.",
+54:     sizes: ["S", "M", "L", "XL"],
+55:     colors: ["Green", "Black", "Navy Blue"],
+56:     badge: "new",
+57:     featured: false
+58:   },
+59:   // Cotton Collection (Frocks/Dresses)
+60:   {
+61:     id: "Cotton-0",
+62:     name: "Cambric Cotton Frock Forest Green",
+63:     price: 999,
+64:     oldPrice: 1199,
+65:     image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&q=80",
+66:     category: "Cotton",
+67:     description: "Elegant forest green cambric cotton frock with hand embroidery details. Perfect for semi-formal gatherings.",
+68:     sizes: ["XS", "S", "M", "L"],
+69:     colors: ["Forest Green", "Lime Green", "Black"],
+70:     badge: "new",
+71:     featured: true
+72:   },
+73:   {
+74:     id: "Cotton-1",
+75:     name: "Cambric Cotton Frock Lime Green",
+76:     price: 999,
+77:     oldPrice: 1199,
+78:     image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&q=80",
+79:     category: "Cotton",
+80:     description: "Bright lime green cotton frock, made from organic cambric cotton. Breathable and comfortable.",
+81:     sizes: ["XS", "S", "M", "L"],
+82:     colors: ["Lime Green", "Forest Green", "Black"],
+83:     badge: "new",
+84:     featured: false
+85:   },
+86:   {
+87:     id: "Cotton-3",
+88:     name: "Cotton Notched Collar Dress Red",
+89:     price: 999,
+90:     oldPrice: 1199,
+91:     image: "https://images.unsplash.com/photo-1588359348347-9bc6cbbb689e?w=400&q=80",
+92:     category: "Cotton",
+93:     description: "Stylishly designed notched collar dress in deep red. Perfect daily wear for modern women.",
+94:     sizes: ["S", "M", "L", "XL"],
+95:     colors: ["Red", "Green"],
+96:     badge: "new",
+97:     featured: true
+98:   },
+99:   // Night Gown / Nightwear
+100:   {
+101:     id: "Night-0",
+102:     name: "Pure Cotton Night Dress Brown",
+103:     price: 750,
+104:     oldPrice: 950,
+105:     image: "https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=400&q=80",
+106:     category: "Nightwear",
+107:     description: "Super soft pure cotton night dress. Keeps you cool and comfortable all night.",
+108:     sizes: ["M", "L", "XL", "XXL"],
+109:     colors: ["Brown", "Green", "Grey"],
+110:     badge: "new",
+111:     featured: true
+112:   },
+113:   {
+114:     id: "Night-1",
+115:     name: "Pure Cotton Night Dress Green",
+116:     price: 750,
+117:     oldPrice: 950,
+118:     image: "https://images.unsplash.com/photo-1566479179817-51cf0e98c0b7?w=400&q=80",
+119:     category: "Nightwear",
+120:     description: "Relaxing green cotton night dress. Styled with simple block print patterns.",
+121:     sizes: ["M", "L", "XL", "XXL"],
+122:     colors: ["Green", "Brown", "Grey"],
+123:     badge: "new",
+124:     featured: false
+125:   },
+126:   // Kurtis
+127:   {
+128:     id: "Kurtis-0",
+129:     name: "A Line Summer Kurti Pink",
+130:     price: 799,
+131:     oldPrice: 1099,
+132:     image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&q=80",
+133:     category: "Kurtis",
+134:     description: "Breathable pink summer kurti in A-line cut. Features delicate lace borders.",
+135:     sizes: ["S", "M", "L", "XL"],
+136:     colors: ["Pink", "Black", "Green"],
+137:     badge: "",
+138:     featured: true
+139:   },
+140:   {
+141:     id: "Kurtis-4",
+142:     name: "Kalyani Cotton Anarkali Parrot Green",
+143:     price: 1499,
+144:     oldPrice: 2099,
+145:     image: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&q=80",
+146:     category: "Kurtis",
+147:     description: "Premium Anarkali kurta in vibrant parrot green with rich traditional border work.",
+148:     sizes: ["M", "L", "XL"],
+149:     colors: ["Parrot Green", "Blue"],
+150:     badge: "",
+151:     featured: true
+152:   },
+153:   // Kids
+154:   {
+155:     id: "Kids-0",
+156:     name: "Cotton Embroidery Co-ord Set Green",
+157:     price: 650,
+158:     oldPrice: 1199,
+159:     image: "https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=400&q=80",
+160:     category: "Kids",
+161:     description: "Cute embroidered green co-ord set for children, made with premium allergy-free cotton.",
+162:     sizes: ["2-3Y", "4-5Y", "6-7Y"],
+163:     colors: ["Green", "Blue", "Black"],
+164:     badge: "",
+165:     featured: true
+166:   },
+167:   // Feeding Dress
+168:   {
+169:     id: "Feeding-0",
+170:     name: "Feeding Lounge Wear Green",
+171:     price: 650,
+172:     oldPrice: 850,
+173:     image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80",
+174:     category: "Feeding",
+175:     description: "Thoughtfully designed maternity and feeding lounge wear with invisible double zips for convenience.",
+176:     sizes: ["M", "L", "XL", "XXL"],
+177:     colors: ["Green", "Black Dots"],
+178:     badge: "",
+179:     featured: false
+180:   },
+181:   // Sarees
+182:   {
+183:     id: "Sarees-0",
+184:     name: "Elegant Silk Saree Red",
+185:     price: 1499,
+186:     oldPrice: 2099,
+187:     image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&q=80",
+188:     category: "Sarees",
+189:     description: "Traditional red silk saree with gold zari borders. Includes running blouse piece.",
+190:     sizes: ["Free Size"],
+191:     colors: ["Red", "Gold"],
+192:     badge: "",
+193:     featured: true
+194:   },
+195:   {
+196:     id: "Sarees-1",
+197:     name: "Printed Cotton Saree Blue",
+198:     price: 999,
+199:     oldPrice: 1499,
+200:     image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&q=80",
+201:     category: "Sarees",
+202:     description: "Lightweight, comfortable printed cotton saree in blue. Perfect for formal and home wear.",
+203:     sizes: ["Free Size"],
+204:     colors: ["Blue"],
+205:     badge: "",
+206:     featured: false
+207:   },
+208:   // Home Essentials
+209:   {
+210:     id: "Home-0",
+211:     name: "Premium Printed Bedsheet Set",
+212:     price: 899,
+213:     oldPrice: 1299,
+214:     image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80",
+215:     category: "Home Essentials",
+216:     description: "Soft cotton double bedsheet with two matching pillow covers in contemporary prints.",
+217:     sizes: ["Double"],
+218:     colors: ["Multicolor"],
+219:     badge: "new",
+220:     featured: true
+221:   }
+222: ];
+223: 
+224: const COLLECTIONS = [
+225:   {name:'🔥 BIG COMBO SALE',cta:'View All',img:'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=300&q=80',href:'#new-arrivals'},
+226:   {name:'Palazzo Set',cta:'View All',img:'https://images.unsplash.com/photo-1594938298603-c8148c4b4d73?w=300&q=80',href:'#sarees'},
+227:   {name:'Georgette Frock',cta:'View All',img:'https://images.unsplash.com/photo-1566479179817-51cf0e98c0b7?w=300&q=80',href:'#cotton'},
+228:   {name:'Stylish Co-Ords',cta:'View All',img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&q=80',href:'#coords'},
+229:   {name:'Elegant Sarees',cta:'View All',img:'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300&q=80',href:'#sarees'},
+230:   {name:'Night Gowns',cta:'View All',img:'https://images.unsplash.com/photo-1596783074918-c84cb06531ca?w=300&q=80',href:'#nightgown'},
+231:   {name:'Trendy Kurtis',cta:'View All',img:'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&q=80',href:'#kurtis'},
+232:   {name:'Feeding Dresses',cta:'View All',img:'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=300&q=80',href:'#feeding'},
+233:   {name:'Cotton Collection',cta:'View All',img:'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=300&q=80',href:'#cotton'},
+234:   {name:'Kids Collections',cta:'View All',img:'https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=300&q=80',href:'#kids'},
+235:   {name:'Home Essentials',cta:'View All',img:'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&q=80',href:'#collections'},
+236: ];
+237: 
+238: const API_BASE_URL = 'http://localhost:5000';
+239: 
+240: function App() {
+241:   const [activeTab, setActiveTab] = useState('shop'); // 'shop' | 'admin' | 'admin-guide'
+242:   const [adminSubTab, setAdminSubTab] = useState('dashboard'); // 'dashboard' | 'orders' | 'products' | 'telegram'
+243:   const [products, setProducts] = useState(fallbackProducts);
+244:   const [orders, setOrders] = useState([]);
+245:   const [stats, setStats] = useState({ totalSales: 0, totalOrders: 0, totalProducts: 0, activeAdmins: 0 });
+246:   const [cart, setCart] = useState([]);
+247:   const [isCartOpen, setIsCartOpen] = useState(false);
+248:   const [selectedProduct, setSelectedProduct] = useState(null);
+249:   const [checkoutSuccess, setCheckoutSuccess] = useState(false);
+250:   const [loading, setLoading] = useState(true);
+251:   const [theme, setTheme] = useState('light');
+252:   
+253:   // Search state
+254:   const [searchQuery, setSearchQuery] = useState('');
+255:   const [isSearchFocused, setIsSearchFocused] = useState(false);
+256:   
+257:   // Toast notifications state
+258:   const [toastMessage, setToastMessage] = useState('');
+259:   const [toastShow, setToastShow] = useState(false);
+260:   const toastTimeoutRef = useRef(null);
+261: 
+262:   // Hero Slider Index
+263:   const [heroIndex, setHeroIndex] = useState(0);
+264: 
+265:   // Checkout Form State
+266:   const [customerName, setCustomerName] = useState('');
+267:   const [email, setEmail] = useState('');
+268:   const [phone, setPhone] = useState('');
+269:   const [address, setAddress] = useState('');
+270: 
+271:   // Selected details sizes and colors
+272:   const [selectedSize, setSelectedSize] = useState('');
+273:   const [selectedColor, setSelectedColor] = useState('');
+274: 
+275:   // Telegram bot mockup chat simulation state
+276:   const [chatMessages, setChatMessages] = useState([]);
+277:   const [simStep, setSimStep] = useState(0);
+278: 
+279:   // Admin Product Adding Form State
+280:   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+281:   const [newProduct, setNewProduct] = useState({
+282:     name: '',
+283:     price: '',
+284:     oldPrice: '',
+285:     image: '',
+286:     category: 'Co-ords',
+287:     description: '',
+288:     sizes: 'S, M, L, XL',
+289:     colors: 'Default',
+290:     featured: false
+291:   });
+292: 
+293:   // Order List filter status
+294:   const [orderFilter, setOrderFilter] = useState('All');
+295: 
+296:   // Trigger Toast Alert
+297:   const triggerToast = (msg) => {
+298:     if (toastTimeoutRef.current) {
+299:       clearTimeout(toastTimeoutRef.current);
+300:     }
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.
