@@ -19,20 +19,34 @@ if (PG_CONNECTION_STRING) {
   const useSsl = !PG_CONNECTION_STRING.includes('localhost') && !PG_CONNECTION_STRING.includes('127.0.0.1');
   pool = new Pool({
     connectionString: PG_CONNECTION_STRING,
-    ssl: useSsl ? { rejectUnauthorized: false } : false
+    ssl: useSsl ? { rejectUnauthorized: false } : false,
+    connectionTimeoutMillis: 10000
   });
   
-  // Test connection
-  pool.query('SELECT NOW()')
-    .then(async () => {
-      isPostgresConnected = true;
+  // Always assume true on startup if connection string is configured
+  // This allows the connection pool to queue and execute queries when PostgreSQL wakes up
+  isPostgresConnected = true;
+  
+  // Verify connection and initialize tables in the background with retries
+  const connectAndInitWithRetry = async (attempt = 1) => {
+    try {
+      await pool.query('SELECT NOW()');
       console.log("=== Cloud Supabase PostgreSQL Connected Successfully ===");
       await initPostgresTables();
       await syncPostgresAdmins();
-    })
-    .catch(err => {
-      console.error("!!! Supabase PostgreSQL Connection Error, falling back to local JSON database !!!", err);
-    });
+    } catch (err) {
+      console.error(`!!! Supabase PostgreSQL Connection Error (Attempt ${attempt}/10) !!!`, err.message);
+      if (attempt < 10) {
+        console.log(`[DATABASE] Retrying Supabase connection and initialization in 5 seconds...`);
+        setTimeout(() => connectAndInitWithRetry(attempt + 1), 5000);
+      } else {
+        console.error("!!! All 10 Supabase connection attempts failed. Disabling Postgres connection and falling back permanently to local JSON database.");
+        isPostgresConnected = false;
+      }
+    }
+  };
+  
+  connectAndInitWithRetry();
 } else {
   console.log("[DATABASE] No SUPABASE_DB_URL found in .env. Running on local JSON file database.");
 }
