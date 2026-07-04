@@ -442,7 +442,7 @@ export async function addInquiry(inquiry) {
 
   try {
     await pool.query(
-      'INSERT INTO inquiries ("id", "createdAt", "name", "email", "phone", "subject", "message") VALUES ($1, $2, $3, $4, $5, $6)',
+      'INSERT INTO inquiries ("id", "createdAt", "name", "email", "phone", "subject", "message") VALUES ($1, $2, $3, $4, $5, $6, $7)',
       [newInquiryObj.id, newInquiryObj.createdAt, newInquiryObj.name, newInquiryObj.email, newInquiryObj.phone, newInquiryObj.subject, newInquiryObj.message]
     );
     return newInquiryObj;

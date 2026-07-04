@@ -218,7 +218,7 @@ async function uploadToSupabaseStorage(filename, buffer, mimeType) {
 }
 
 // --- FIXED UPLOAD ROUTE ---
-// Priority: Supabase -> Firebase -> Cloudinary -> Google Drive -> Local disk
+// Priority: Firebase -> Supabase -> Cloudinary -> Google Drive -> Local disk
 // Local fallback now returns an ABSOLUTE url (backend domain), not a relative path,
 // so images resolve correctly even when frontend is hosted on a different domain.
 app.post('/api/upload', requireAdminAuth, async (req, res) => {
@@ -244,17 +244,6 @@ app.post('/api/upload', requireAdminAuth, async (req, res) => {
     const buffer = Buffer.from(base64Data, 'base64');
     const filename = `apparel_${Date.now()}${extension}`;
 
-    // Try Supabase Storage Upload
-    try {
-      const supabaseURL = await uploadToSupabaseStorage(filename, buffer, mimeType);
-      if (supabaseURL) {
-        console.log("[UPLOAD] ✅ Uploaded via Supabase Storage:", supabaseURL);
-        return res.json({ success: true, imagePath: supabaseURL });
-      }
-    } catch (supabaseErr) {
-      console.warn("[UPLOAD] Supabase Storage upload failed, trying Firebase...", supabaseErr.message);
-    }
-
     // Try Firebase Storage Upload
     try {
       const firebaseURL = await uploadToFirebaseStorage(filename, buffer, mimeType, 'products');
@@ -263,7 +252,18 @@ app.post('/api/upload', requireAdminAuth, async (req, res) => {
         return res.json({ success: true, imagePath: firebaseURL });
       }
     } catch (firebaseErr) {
-      console.warn("[UPLOAD] Firebase Storage upload failed, trying Cloudinary...", firebaseErr.message);
+      console.warn("[UPLOAD] Firebase Storage upload failed, trying Supabase...", firebaseErr.message);
+    }
+
+    // Try Supabase Storage Upload
+    try {
+      const supabaseURL = await uploadToSupabaseStorage(filename, buffer, mimeType);
+      if (supabaseURL) {
+        console.log("[UPLOAD] ✅ Uploaded via Supabase Storage:", supabaseURL);
+        return res.json({ success: true, imagePath: supabaseURL });
+      }
+    } catch (supabaseErr) {
+      console.warn("[UPLOAD] Supabase Storage upload failed, trying Cloudinary...", supabaseErr.message);
     }
     
     // Try Cloudinary Cloud Upload
