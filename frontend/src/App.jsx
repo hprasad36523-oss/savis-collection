@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
-import { storage, ref, uploadBytesResumable, getDownloadURL } from './firebase';
 
 // Fallback products data matching the SAVI'S collection storefront HTML structure
 const fallbackProducts = [];
@@ -1855,33 +1854,37 @@ function App() {
     }
   };
 
-  // Helper to upload images to Firebase Storage
-  const uploadToFirebase = (file, folder = 'products') => {
+  // Helper to upload images to backend which uploads to Supabase/Cloudinary
+  const uploadToBackend = (file) => {
     return new Promise((resolve, reject) => {
-      const fileName = `${folder}/${Date.now()}_${file.name}`;
-      const fileRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(fileRef, file);
-
-      uploadTask.on(
-        "state_changed",
-        null,
-        (error) => {
-          console.error("Firebase upload error:", error);
-          reject(error);
-        },
-        async () => {
-          try {
-            const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-            resolve(downloadUrl);
-          } catch (urlErr) {
-            reject(urlErr);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = async () => {
+        try {
+          const base64Data = reader.result;
+          const res = await fetch(`${API_BASE_URL}/api/upload`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${adminToken}`
+            },
+            body: JSON.stringify({ imageBase64: base64Data })
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            resolve(data.imagePath);
+          } else {
+            reject(new Error(data.error || 'Failed to upload image to backend'));
           }
+        } catch (err) {
+          reject(err);
         }
-      );
+      };
+      reader.onerror = (error) => reject(error);
     });
   };
 
-  // handle image upload from file selector using Firebase Storage
+  // handle image upload from file selector using Backend API (Supabase Storage)
   const handleProductImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -1890,11 +1893,11 @@ function App() {
       return;
     }
     setImageUploading(true);
-    triggerToast("Uploading product image to Firebase...");
+    triggerToast("Uploading product image...");
     try {
-      const downloadUrl = await uploadToFirebase(file);
+      const downloadUrl = await uploadToBackend(file);
       setNewProduct(prev => ({ ...prev, image: downloadUrl }));
-      triggerToast("Image uploaded to Firebase successfully!");
+      triggerToast("Image uploaded successfully!");
     } catch (err) {
       console.error("Upload failed", err);
       alert("Upload failed: " + err.message);
@@ -1903,7 +1906,7 @@ function App() {
     }
   };
 
-  // handle image upload for a specific color swatch using Firebase Storage
+  // handle image upload for a specific color swatch using Backend API (Supabase Storage)
   const handleColorImageUpload = async (color, e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -1911,9 +1914,9 @@ function App() {
       alert("Please upload an image smaller than 5MB.");
       return;
     }
-    triggerToast(`Uploading image for ${color} to Firebase...`);
+    triggerToast(`Uploading image for ${color}...`);
     try {
-      const downloadUrl = await uploadToFirebase(file, 'swatches');
+      const downloadUrl = await uploadToBackend(file);
       setNewProduct(prev => ({
         ...prev,
         colorImages: {

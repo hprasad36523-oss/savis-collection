@@ -244,17 +244,6 @@ app.post('/api/upload', requireAdminAuth, async (req, res) => {
     const buffer = Buffer.from(base64Data, 'base64');
     const filename = `apparel_${Date.now()}${extension}`;
 
-    // Try Firebase Storage Upload
-    try {
-      const firebaseURL = await uploadToFirebaseStorage(filename, buffer, mimeType, 'products');
-      if (firebaseURL) {
-        console.log("[UPLOAD] ✅ Uploaded via Firebase Storage:", firebaseURL);
-        return res.json({ success: true, imagePath: firebaseURL });
-      }
-    } catch (firebaseErr) {
-      console.warn("[UPLOAD] Firebase Storage upload failed, trying Supabase...", firebaseErr.message);
-    }
-
     // Try Supabase Storage Upload
     try {
       const supabaseURL = await uploadToSupabaseStorage(filename, buffer, mimeType);
@@ -263,7 +252,20 @@ app.post('/api/upload', requireAdminAuth, async (req, res) => {
         return res.json({ success: true, imagePath: supabaseURL });
       }
     } catch (supabaseErr) {
-      console.warn("[UPLOAD] Supabase Storage upload failed, trying Cloudinary...", supabaseErr.message);
+      console.warn("[UPLOAD] Supabase Storage upload failed, trying Firebase...", supabaseErr.message);
+    }
+
+    // Try Firebase Storage Upload (Only if FIREBASE_API_KEY is configured)
+    if (process.env.FIREBASE_API_KEY && process.env.FIREBASE_API_KEY !== 'YOUR_FIREBASE_API_KEY') {
+      try {
+        const firebaseURL = await uploadToFirebaseStorage(filename, buffer, mimeType, 'products');
+        if (firebaseURL) {
+          console.log("[UPLOAD] ✅ Uploaded via Firebase Storage:", firebaseURL);
+          return res.json({ success: true, imagePath: firebaseURL });
+        }
+      } catch (firebaseErr) {
+        console.warn("[UPLOAD] Firebase Storage upload failed, trying Cloudinary...", firebaseErr.message);
+      }
     }
     
     // Try Cloudinary Cloud Upload
