@@ -119,14 +119,45 @@ if (fs.existsSync(distPath)) {
 }
 
 // --- Admin Authentication Middleware & Login ---
-// In-memory active admin sessions
-const activeSessions = new Set();
+// Stateless signed tokens (survive server restarts / Render free-tier spin-down,
+// unlike the old in-memory Set which reset to empty on every restart).
+const ADMIN_TOKEN_SECRET = process.env.ADMIN_TOKEN_SECRET || process.env.ADMIN_PASSWORD || 'siva@123';
+const ADMIN_TOKEN_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+function signAdminToken(username) {
+  const expiry = Date.now() + ADMIN_TOKEN_TTL_MS;
+  const payload = `${username}.${expiry}`;
+  const signature = crypto.createHmac('sha256', ADMIN_TOKEN_SECRET).update(payload).digest('hex');
+  return Buffer.from(`${payload}.${signature}`).toString('base64');
+}
+
+function verifyAdminToken(token) {
+  try {
+    const decoded = Buffer.from(token, 'base64').toString('utf8');
+    const parts = decoded.split('.');
+    if (parts.length !== 3) return false;
+    const [username, expiryStr, signature] = parts;
+    const expiry = parseInt(expiryStr, 10);
+    if (!username || !expiry || !signature) return false;
+    if (Date.now() > expiry) return false;
+
+    const expectedSignature = crypto.createHmac('sha256', ADMIN_TOKEN_SECRET)
+      .update(`${username}.${expiry}`).digest('hex');
+
+    const sigBuf = Buffer.from(signature, 'hex');
+    const expectedBuf = Buffer.from(expectedSignature, 'hex');
+    if (sigBuf.length !== expectedBuf.length) return false;
+    return crypto.timingSafeEqual(sigBuf, expectedBuf);
+  } catch (e) {
+    return false;
+  }
+}
 
 function requireAdminAuth(req, res, next) {
   const authHeader = req.headers['authorization'];
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.split(' ')[1];
-    if (activeSessions.has(token)) {
+    if (verifyAdminToken(token)) {
       return next();
     }
   }
@@ -139,8 +170,7 @@ app.post('/api/admin/login', adminLoginRateLimiter, (req, res) => {
   const expectedPass = process.env.ADMIN_PASSWORD || 'siva@123';
   
   if (username === expectedUser && password === expectedPass) {
-    const token = crypto.randomBytes(32).toString('hex');
-    activeSessions.add(token);
+    const token = signAdminToken(username);
     return res.json({ success: true, token });
   }
   res.status(401).json({ error: 'Invalid username or password' });
