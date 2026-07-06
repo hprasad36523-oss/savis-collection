@@ -154,6 +154,19 @@ function verifyAdminToken(token) {
 }
 
 function requireAdminAuth(req, res, next) {
+  // ============================================================
+  // ⚠️⚠️⚠️ TEMPORARY DEMO BYPASS — REMOVE BEFORE GOING LIVE ⚠️⚠️⚠️
+  // When DEMO_MODE_NO_AUTH=true is set in Render env vars, ALL admin
+  // routes (add/delete products, view orders, view customer data,
+  // reset-database) become PUBLIC with no login required.
+  // Set this env var back to "false" (or delete it) the moment the
+  // demo is over. Do NOT leave this on for a live/public site.
+  // ============================================================
+  if (process.env.DEMO_MODE_NO_AUTH === 'true') {
+    console.warn('[SECURITY] ⚠️ DEMO_MODE_NO_AUTH is ON — admin routes are UNPROTECTED right now.');
+    return next();
+  }
+
   const authHeader = req.headers['authorization'];
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.split(' ')[1];
